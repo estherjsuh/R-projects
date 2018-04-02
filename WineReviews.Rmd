@@ -1,0 +1,136 @@
+---
+title: "Sentiment Analysis: Wine Reviews"
+author: "Esther Suh"
+output: html_document
+---
+
+**Load Dataset**
+
+```{r}
+df <- read.csv("https://query.data.world/s/fsz4la3t7cjhixxhg2q2rmvtcu2tzm", header=TRUE, stringsAsFactors=FALSE);
+str(df)
+summary(df)
+```
+
+
+**Remove rows where review scores are null**
+
+```{r}
+df = df[!is.na(df$reviews.rating),]
+table(df$reviews.rating)
+```
+
+**Create wine dataframe with 2 columns: reviews.rating, reviews.text**
+
+```{r}
+wine = data.frame(df$reviews.rating, df$reviews.text)
+```
+
+**Create "negative" column where the rating score where reviews.rating <=2 is TRUE, and FALSE other for reviews.rating >=3**
+
+```{r}
+wine$negative = as.factor(wine$df.reviews.rating <= 2)
+```
+
+
+**Load libraries: tm, SnowballC**
+
+```{r}
+library(tm)
+library(SnowballC)
+```
+
+
+**Create Corpus with reviews.text, and look at first review**
+```{r}
+corpus = Corpus(VectorSource(wine$df.reviews.text))
+corpus[[1]]$content
+```
+
+**Get data ready for text analysis**
+
+```{r}
+corpus = tm_map(corpus, tolower)
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeWords, c(stopwords("english")))
+corpus = tm_map(corpus, stemDocument)
+```
+
+**Review first review after changes**
+```{r}
+corpus[[1]]$content
+```
+
+**Review text frequencies (below shows that there are 4,018 distinct terms)**
+```{r}
+freq = DocumentTermMatrix(corpus)
+freq
+```
+
+**Show words that appear more than 100 times**
+```{r}
+findFreqTerms(freq, lowfreq=100)
+```
+
+**Narrowing terms that appear .05%+ in text**
+```{r}
+sparse = removeSparseTerms(freq, .995)
+sparse
+```
+
+**Convert "sparse" to dataframe**
+```{r}
+wineSparse = as.data.frame(as.matrix(sparse))
+colnames(wineSparse) = make.names(colnames(wineSparse))
+wineSparse$negative = wine$negative
+```
+
+*Split data to training/testing sets*
+```{r}
+library(caTools)
+set.seed(101)
+split = sample.split(wineSparse$negative, SplitRatio = .7)
+trainWine = subset(wineSparse, split==TRUE)
+testWine= subset(wineSparse, split==FALSE)
+```
+
+**CART Model on training set**
+```{r}
+library(rpart)
+library(rpart.plot)
+wineCart = rpart(negative ~., data=trainWine, method="class")
+prp(wineCart)
+```
+
+**Predict model on testing set**
+```{r}
+predictWine = predict(wineCart, newdata=testWine, type="class")
+```
+
+**Classfication Matrix**
+```{r}
+table(testWine$negative, predictWine)
+```
+
+**Model accuracy**
+```{r}
+(698 + 3) / (698+2+31+3)
+```
+
+**Baseline model**
+```{r}
+table(testWine$negative)
+700/ (700 + 34)
+```
+
+**Random Forest Model**
+```{r}
+library(randomForest)
+set.seed(144)
+wineRF = randomForest(negative ~., data=trainWine)
+predictRF = predict(wineRF, newdata= testWine)
+table(testWine$negative, predictRF)
+(700+3)/(700+31+3)
+```
+
+
