@@ -298,7 +298,7 @@ wineCart = rpart(negative ~., data=trainWine, method="class")
 prp(wineCart)
 ```
 
-![](WineReviews_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](images/unnamed-chunk-14-1.png)<!-- -->
 
 **Predict model on testing set**
 
