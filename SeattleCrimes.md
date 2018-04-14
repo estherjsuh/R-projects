@@ -440,7 +440,9 @@ mapT
 
 ![](images.map1traffic.png)<!-- -->
 
-**2. DISTURBANCES **
+
+
+**2. DISTURBANCES**
 
 
 ```r
