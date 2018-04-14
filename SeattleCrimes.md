@@ -181,7 +181,7 @@ wkday$Var1= factor(wkday$Var1, ordered=TRUE, levels = c("Sunday", "Monday", "Tue
 ggplot(wkday, aes(x=Var1, y=Freq)) + geom_line(aes(group=1)) + xlab("Day of Week") + ylab("Seattle Incident Reports") 
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](images/line.png)<!-- -->
 
 **Counting Incidents by Years**
 
@@ -225,7 +225,7 @@ weekdayHr3$hour = as.numeric(as.character(weekdayHr3$Var2))
 ggplot(weekdayHr3, aes(x=hour, y=Freq)) + geom_line(aes(group=Var1, color=Var1), size=2)
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](images/multiline.png)<!-- -->
 
 **Heatmap for Weekday/Hour**
 
@@ -236,7 +236,7 @@ weekdayHr3$Var1 = factor(wkday$Var1, ordered=TRUE, levels = c("Monday", "Tuesday
 ggplot(weekdayHr3, aes(x=hour, y=Var1)) + geom_tile(aes(fill=Freq)) + scale_fill_gradient(name="Total Incident Reports", low="yellow", high="red") + theme(axis.title.y= element_blank())
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](images/heatmap.png)<!-- -->
 
 **Investigate columns: Event.Clearance.Group**
 
@@ -416,7 +416,7 @@ seattle_map= get_map(location= "seattle", zoom=11)
 ggmap(seattle_map)
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](images/map.png)<!-- -->
 
 
 **Build function that can be used to map other incident groups**
@@ -438,7 +438,7 @@ mapT
 ## Warning: Removed 44 rows containing missing values (geom_tile).
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](images.map1traffic.png)<!-- -->
 
 **2. DISTURBANCES **
 
@@ -472,7 +472,7 @@ mapD= map(disturbances)
 mapD
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+![](images/map2disturbances.png)<!-- -->
  
 **3. SUSPICIOUS CIRCUMSTANCES**
 
@@ -502,7 +502,7 @@ mapS
 ## Warning: Removed 84 rows containing missing values (geom_tile).
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+![](images/map3suspicious.png)<!-- -->
  
 **4. MOTOR VEHICLE COLLISION INVESTIGATION**
     
@@ -531,7 +531,7 @@ mapC= map(collision)
 mapC
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+![](images/map4collision.png)<!-- -->
 
 **Mapping Auto Thefts**
 
@@ -556,7 +556,7 @@ mapAT= map(auto_thefts)
 mapAT
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+![](images/map5autotheft.png)<!-- -->
 
 **Mapping Assaults**
 
@@ -580,5 +580,5 @@ mapA = map(assaults)
 mapA
 ```
 
-![](SeattleCrimes_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+![](images/map6assaults.png)<!-- -->
 
