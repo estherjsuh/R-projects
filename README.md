@@ -1,7 +1,18 @@
 # R-projects
 
-### Projects using programming langugage R
+## Projects using programming langugage R
 
+**SeattleCrimes.md**
+
+The data for Seattle Crime Prediction project was retrieved from the city's website below:
+
+    https://data.seattle.gov/Public-Safety/Seattle-Police-Department-911-Incident-Response/3k2p-39jpv
+
+R libraries used:
+  * ggplot2 : plotting line graphs & heatmap
+  * ggmaps : spatial visualization 
+  * maps : draw geographical maps
+  
 
 **WineReviews.md**
 
